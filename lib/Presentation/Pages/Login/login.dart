@@ -99,50 +99,56 @@ class Login extends StatelessWidget {
                       child: TextField(
                         decoration: InputDecoration(
                             border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15.w, bottom: 13.h, top: 13.h),
+                            floatingLabelAlignment: FloatingLabelAlignment.center,
+                            contentPadding: EdgeInsets.symmetric(horizontal: 26.h),
                             hintText: "Masukkan No.Telepon",
                             hintStyle: GoogleFonts.montserrat(
+
                                 fontSize: 15.sp, fontWeight: FontWeight.w300)),
                       ),
                     ),
-                    SizedBox(height: 38.h,),
+                    SizedBox(
+                      height: 38.h,
+                    ),
                     Container(
-  height: 48.h,
-  width: 335.w,
-  decoration: BoxDecoration(
-    color: AppColor.primary,
-    borderRadius: BorderRadius.circular(10),
-  ),
-  child: ElevatedButton(
-    onPressed: () {
-      Get.toNamed(MyPage.home);
-    },
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.transparent, 
-      shadowColor: Colors.transparent, 
-    ),
-    child: Text(
-      "Daftar",
-      style: GoogleFonts.roboto(
-        fontSize: 18.sp,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
-    ),
-  ),
-),
-
-                    
-                    
-                    
-                    SizedBox(height: 30.h,),
-                    RichText(text: TextSpan(
-                      text: "Belum punya akun? ",
-                      style: GoogleFonts.montserrat(fontSize: 15.sp),
-                    children: [
-                      TextSpan(text: "Daftar sekarang",style: GoogleFonts.montserrat(fontSize: 15.sp,color: AppColor.secondary))
-                    ]),)
+                      height: 48.h,
+                      width: 335.w,
+                      decoration: BoxDecoration(
+                        color: AppColor.primary,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Get.toNamed(MyPage.home);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                        ),
+                        child: Text(
+                          "Masuk",
+                          style: GoogleFonts.roboto(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                          text: "Belum punya akun? ",
+                          style: GoogleFonts.montserrat(fontSize: 15.sp),
+                          children: [
+                            TextSpan(
+                                text: "Daftar sekarang",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 15.sp, color: AppColor.secondary))
+                          ]),
+                    )
                   ],
                 ),
               ),

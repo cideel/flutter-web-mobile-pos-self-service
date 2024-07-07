@@ -77,6 +77,9 @@ flutter:
     - assets/lauk-icon.png
     - assets/doritos-icon.png
     - assets/sayuran-icon.png
+    - assets/product-image.png
+    - assets/product-image-2.png
+    - assets/product-image-3.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

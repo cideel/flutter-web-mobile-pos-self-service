@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:posweb/Config/router.dart';
 import 'package:posweb/Config/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:posweb/Presentation/Controller/AddOrderPopUp/popupController.dart';
+import 'package:posweb/Presentation/Pages/AddPopUp/popup.dart';
 
 class Register extends StatelessWidget {
-  const Register({super.key});
+  final OrderController orderController = Get.put(OrderController());
 
   @override
   Widget build(BuildContext context) {
@@ -176,17 +179,26 @@ class Register extends StatelessWidget {
                       height: 48.h,
                       width: 335.w,
                       decoration: BoxDecoration(
-                          color: AppColor.primary,
-                          borderRadius: BorderRadius.circular(10)),
+                        color: AppColor.primary,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: ElevatedButton(
-                          onPressed: null,
-                          child: Text(
-                            "Daftar",
-                            style: GoogleFonts.roboto(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          )),
+                        onPressed: () {
+                          Get.dialog(AddOrderPopup());
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                        ),
+                        child: Text(
+                          "Daftar",
+                          style: GoogleFonts.roboto(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 30.h,),
                     RichText(text: TextSpan(

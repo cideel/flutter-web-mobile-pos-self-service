@@ -50,6 +50,7 @@ class StartPage extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 20.w),
               alignment: Alignment.topLeft,
               child: Text(
+                maxLines: 1,
                 "Makanan enak, mood enak, jalanin hari jadi enak!",
                 style: GoogleFonts.montserrat(
                     fontSize: 13.sp,

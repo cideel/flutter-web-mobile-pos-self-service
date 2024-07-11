@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:posweb/Config/icon.dart';
 import 'package:posweb/Config/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:posweb/Presentation/Pages/Home/Widgets/floatingButton.dart';
 import 'package:posweb/Presentation/Pages/Home/Widgets/iconCategory.dart';
 
 class Home extends StatelessWidget {
@@ -19,7 +20,6 @@ class Home extends StatelessWidget {
         designSize: Size(375, 854),
         child: Scaffold(
           body: Container(
-          
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -209,7 +209,8 @@ class Home extends StatelessWidget {
                                   ),
                                   Container(
                                     alignment: Alignment.topLeft,
-                                    margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10.w),
                                     child: Text(
                                       maxLines: 1,
                                       "Rp.6000",
@@ -217,17 +218,20 @@ class Home extends StatelessWidget {
                                           fontSize: 13.sp,
                                           fontWeight: FontWeight.normal),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             );
                           }),
                     ),
-                  )
+                  ),
+                  
                 ],
               ),
             ),
           ),
+          floatingActionButton: CustomFloatingActionButton(),
+          floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat
         ),
       ),
     );
@@ -246,7 +250,6 @@ class appBarCustom extends StatelessWidget {
       height: 42.h,
       width: 335.w,
       child: AppBar(
-        
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(

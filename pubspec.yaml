@@ -80,6 +80,11 @@ flutter:
     - assets/product-image.png
     - assets/product-image-2.png
     - assets/product-image-3.png
+    - assets/icon-float.png
+    - assets/image-order.png
+    - assets/coin.png
+    - assets/cash-icon.png
+    - assets/icon-money.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -7,7 +7,7 @@ import 'package:posweb/Config/router.dart';
 import 'package:posweb/Config/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:posweb/Presentation/Controller/AddOrderPopUp/popupController.dart';
-import 'package:posweb/Presentation/Pages/AddPopUp/popup.dart';
+import 'package:posweb/Presentation/Pages/PopupAdd/popup.dart';
 
 class Register extends StatelessWidget {
   final OrderController orderController = Get.put(OrderController());

@@ -3,8 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:posweb/Config/theme.dart';
 import 'package:posweb/Presentation/Controller/NavbarC/navbarController.dart';
+import 'package:posweb/Presentation/Pages/Category/detailCategory.dart';
 import 'package:posweb/Presentation/Pages/History/history.dart';
 import 'package:posweb/Presentation/Pages/Home/home.dart';
+import 'package:posweb/Presentation/Pages/Payment/payment.dart';
+import 'package:posweb/Presentation/Pages/Profile/profilLogin.dart';
 import 'package:posweb/Presentation/Pages/Profile/profile.dart';
 
 import 'config/router.dart';
@@ -42,7 +45,7 @@ class MainNavigationPage extends StatelessWidget {
   final List<Widget> pages = [
     Home(),
     History(),
-    Profile(),
+    ProfilLogin(),
   ];
 
   @override

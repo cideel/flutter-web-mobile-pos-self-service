@@ -1,26 +1,36 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:posweb/Config/icon.dart';
+import 'package:posweb/Config/router.dart';
 import 'package:posweb/Config/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:posweb/Presentation/Pages/Category/detailCategory.dart';
+import 'package:posweb/Presentation/Pages/Home/Controller/menuController.dart';
 import 'package:posweb/Presentation/Pages/Home/Widgets/floatingButton.dart';
 import 'package:posweb/Presentation/Pages/Home/Widgets/iconCategory.dart';
+import 'package:posweb/Presentation/Pages/PopupAdd/popup.dart'; // Pastikan hanya mengimpor dari sini
 
 class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final MenuControl menuCon = Get.put(MenuControl());
+
     return SafeArea(
       child: ScreenUtilInit(
         minTextAdapt: true,
         designSize: Size(375, 854),
         child: Scaffold(
-          body: Container(
-            child: SingleChildScrollView(
+          body: Obx(() {
+            if (menuCon.isLoading.value) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            return SingleChildScrollView(
               child: Column(
                 children: [
                   SizedBox(
@@ -55,26 +65,38 @@ class Home extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            iconCategoryWidget(
-                              imagePath: IconCategory.iconDrink,
-                              text: 'Minuman',
+                            GestureDetector(
+                              onTap: () => Get.to(() => DetailCategory(type: 'appetizer')),
+                              child: iconCategoryWidget(
+                                imagePath: IconCategory.iconDrink,
+                                text: 'Appetizer',
+                              ),
                             ),
                             SizedBox(
                               width: 5.w,
                             ),
-                            iconCategoryWidget(
-                                imagePath: IconCategory.iconCamilan,
-                                text: "Ice Cream"),
+                            GestureDetector(
+                              onTap: () => Get.toNamed(MyPage.category,arguments: {'type':'dessert'}),
+                              child: iconCategoryWidget(
+                                  imagePath: IconCategory.iconCamilan,
+                                  text: "Dessert"),
+                            ),
                             SizedBox(
                               width: 5.w,
                             ),
-                            iconCategoryWidget(
-                                imagePath: IconCategory.iconNasi, text: "Nasi"),
+                            GestureDetector(
+                              onTap: () => Get.toNamed(MyPage.category,arguments: {'type':'main_course'}),
+                              child: iconCategoryWidget(
+                                  imagePath: IconCategory.iconNasi, text: "Nasi"),
+                            ),
                             SizedBox(
                               width: 5.h,
                             ),
-                            iconCategoryWidget(
-                                imagePath: IconCategory.iconBuah, text: "Buah")
+                            GestureDetector(
+                              onTap: () => Get.toNamed(MyPage.category,arguments: {'type':'drink'}),
+                              child: iconCategoryWidget(
+                                  imagePath: IconCategory.iconBuah, text: "Drink"),
+                            )
                           ],
                         ),
                         SizedBox(
@@ -155,83 +177,102 @@ class Home extends StatelessWidget {
                             crossAxisSpacing: 25.w,
                             mainAxisSpacing: 27.h,
                           ),
-                          itemCount: 10,
+                          itemCount: menuCon.menuItems.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              height: 169.h,
-                              width: 154.w,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12.r),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.25),
-                                      spreadRadius: 0,
-                                      offset: Offset(3, 3),
-                                      blurRadius: 5,
-                                    ),
-                                  ]),
-                              child: Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(12.r),
-                                        topRight: Radius.circular(12)),
-                                    child: Container(
-                                      height: 90.h,
-                                      width: 1.sw,
-                                      child: Image.asset(
-                                        "assets/product-image-3.png",
-                                        fit: BoxFit.cover,
+                            var item = menuCon.menuItems[index];
+                            return GestureDetector(
+                              onTap: () => Get.dialog(AddOrderPopup(item: item)),
+                              child: Container(
+                                height: 169.h,
+                                width: 154.w,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Color.fromRGBO(0, 0, 0, 0.25),
+                                        spreadRadius: 0,
+                                        offset: Offset(3, 3),
+                                        blurRadius: 5,
                                       ),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12.r)),
+                                    ]),
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(12.r),
+                                          topRight: Radius.circular(12)),
+                                      child: Container(
+                                        height: 90.h,
+                                        width: 1.sw,
+                                        child: Image.asset(
+                                          fit: BoxFit.cover,
+                                          'assets/product-image-3.png'
+                                        ),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12.r)),
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 3.h,
-                                  ),
-                                  Container(
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 10.w),
-                                    child: Text(
-                                      "Saladin Al Ayubi Menyehatkan Masa ya yang bener loe",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.bold),
+                                    SizedBox(
+                                      height: 3.h,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 2.h,
-                                  ),
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 10.w),
-                                    child: Text(
-                                      maxLines: 1,
-                                      "Rp.6000",
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.normal),
+                                    Container(
+                                      alignment: Alignment.bottomLeft,
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 10.w),
+                                      child: Text(
+                                        item['item_name'],
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 13.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                    Container(
+                                      alignment: Alignment.bottomLeft,
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 10.w),
+                                      child: Text(
+                                        item['item_description'],
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 11.sp,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 2.h,
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 10.w),
+                                      child: Text(
+                                        "Rp. ${item['item_price']}",
+                                        maxLines: 1,
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 13.sp,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           }),
                     ),
                   ),
-                  
                 ],
               ),
-            ),
-          ),
+            );
+          }),
           floatingActionButton: CustomFloatingActionButton(),
-          floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat
         ),
       ),
     );

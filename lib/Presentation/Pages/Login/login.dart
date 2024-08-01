@@ -1,17 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
-import 'package:posweb/Config/router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:posweb/Config/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:posweb/Presentation/Pages/Register/Controller/auth_controller.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.put(AuthController());
+
+    final TextEditingController phoneController = TextEditingController();
+
     return SafeArea(
       child: ScreenUtilInit(
         minTextAdapt: true,
@@ -70,7 +72,7 @@ class Login extends StatelessWidget {
                       height: 30.h,
                     ),
                     Text(
-                      "Daftar",
+                      "Masuk",
                       style: GoogleFonts.roboto(
                           fontSize: 32.sp, fontWeight: FontWeight.bold),
                     ),
@@ -94,16 +96,15 @@ class Login extends StatelessWidget {
                       height: 44.h,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          border:
-                              Border.all(style: BorderStyle.solid, width: 1)),
+                          border: Border.all(style: BorderStyle.solid, width: 1)),
                       child: TextField(
+                        controller: phoneController,
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             floatingLabelAlignment: FloatingLabelAlignment.center,
                             contentPadding: EdgeInsets.symmetric(horizontal: 26.h),
                             hintText: "Masukkan No.Telepon",
                             hintStyle: GoogleFonts.montserrat(
-
                                 fontSize: 15.sp, fontWeight: FontWeight.w300)),
                       ),
                     ),
@@ -119,7 +120,11 @@ class Login extends StatelessWidget {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          Get.toNamed(MyPage.home);
+                          if (phoneController.text.isEmpty) {
+                            Get.snackbar('Error', 'Please enter your phone number.');
+                            return;
+                          }
+                          authController.login(phoneController.text);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,

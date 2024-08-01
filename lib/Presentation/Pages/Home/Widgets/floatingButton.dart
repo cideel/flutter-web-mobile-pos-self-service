@@ -1,58 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
-import 'package:posweb/Config/icon.dart';
 import 'package:posweb/Config/router.dart';
 import 'package:posweb/Config/theme.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:posweb/Presentation/Controller/AddOrderPopUp/popupController.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {
+  final OrderController orderController = Get.find<OrderController>();
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 308.w,
-      height: 48.h,
-      child: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed(MyPage.order);
-          // Define your onPressed functionality here
-        },
-        backgroundColor: AppColor.primary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(41.r),
+    return Obx(() {
+      return Visibility(
+        visible: orderController.totalItems > 0,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            Get.toNamed(MyPage.order);
+          },
+          label: Text('Items: ${orderController.totalItems} | Total: Rp ${orderController.totalPrice.toStringAsFixed(0)}'),
+          icon: Icon(Icons.shopping_cart),
+          backgroundColor: AppColor.primary,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              "assets/icon-float.png",
-              width: 30.w,
-            ),
-            SizedBox(
-              width: 20.w,
-            ),
-            Text(
-              "100 Menu",
-              style: GoogleFonts.montserrat(
-                  color: Colors.white,
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w300),
-            ),
-            SizedBox(
-              width: 20.w,
-            ),
-            Text(
-              "Rp 5.930.000",
-              style: GoogleFonts.montserrat(
-                  color: Colors.white,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.bold),
-            )
-          ],
-        ),
-      ),
-    );
+      );
+    });
   }
 }

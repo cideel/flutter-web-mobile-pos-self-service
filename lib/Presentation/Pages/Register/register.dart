@@ -1,16 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:posweb/Config/router.dart';
 import 'package:posweb/Config/theme.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:posweb/Presentation/Controller/AddOrderPopUp/popupController.dart';
-import 'package:posweb/Presentation/Pages/PopupAdd/popup.dart';
+import 'package:posweb/Presentation/Pages/Register/Controller/auth_controller.dart';
+import 'package:flutter/gestures.dart';
 
 class Register extends StatelessWidget {
-  final OrderController orderController = Get.put(OrderController());
+  final AuthController authController = Get.put(AuthController());
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,148 +67,101 @@ class Register extends StatelessWidget {
                     color: Colors.white),
                 height: 1.sh,
                 width: 1.sw,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 30.h,
-                    ),
-                    Text(
-                      "Daftar",
-                      style: GoogleFonts.roboto(
-                          fontSize: 32.sp, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 25.h,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20.w),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Nama",
-                        style: GoogleFonts.roboto(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    Container(
-                      width: 335.w,
-                      height: 44.h,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border:
-                              Border.all(style: BorderStyle.solid, width: 1)),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15.w, bottom: 13.h, top: 13.h),
-                            hintText: "Masukkan Nama anda",
-                            hintStyle: GoogleFonts.montserrat(
-                                fontSize: 15.sp, fontWeight: FontWeight.w300)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 31.h,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20.w),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "No. Telepon",
-                        style: GoogleFonts.roboto(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    Container(
-                      width: 335.w,
-                      height: 44.h,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border:
-                              Border.all(style: BorderStyle.solid, width: 1)),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15.w, bottom: 13.h, top: 13.h),
-                            hintText: "Masukkan No.Telepon",
-                            hintStyle: GoogleFonts.montserrat(
-                                fontSize: 15.sp, fontWeight: FontWeight.w300)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 31.h,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20.w),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        " Email (Opsional)",
-                        style: GoogleFonts.roboto(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    Container(
-                      width: 335.w,
-                      height: 44.h,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border:
-                              Border.all(style: BorderStyle.solid, width: 1)),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15.w, bottom: 13.h, top: 13.h),
-                            hintText: "Masukkan Email Anda",
-                            hintStyle: GoogleFonts.montserrat(
-                                fontSize: 15.sp, fontWeight: FontWeight.w300)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 52.h,
-                    ),
-                    Container(
-                      height: 48.h,
-                      width: 335.w,
-                      decoration: BoxDecoration(
-                        color: AppColor.primary,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Get.dialog(AddOrderPopup());
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          shadowColor: Colors.transparent,
-                        ),
-                        child: Text(
-                          "Daftar",
-                          style: GoogleFonts.roboto(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 30.h,),
-                    RichText(text: TextSpan(
-                      text: "Sudah punya akun? ",
-                      style: GoogleFonts.montserrat(fontSize: 15.sp),
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      TextSpan(text: "Masuk",style: GoogleFonts.montserrat(fontSize: 15.sp,color: AppColor.secondary))
-                    ]),)
-                  ],
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      Text(
+                        "Daftar",
+                        style: GoogleFonts.roboto(
+                            fontSize: 32.sp, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 25.h,
+                      ),
+                      _buildInputField(
+                        "Nama", 
+                        nameController, 
+                        "Masukkan Nama anda"
+                      ),
+                      SizedBox(
+                        height: 31.h,
+                      ),
+                      _buildInputField(
+                        "No. Telepon", 
+                        phoneController, 
+                        "Masukkan No.Telepon"
+                      ),
+                      SizedBox(
+                        height: 31.h,
+                      ),
+                      _buildInputField(
+                        "Email (Opsional)", 
+                        emailController, 
+                        "Masukkan Email Anda"
+                      ),
+                      SizedBox(
+                        height: 52.h,
+                      ),
+                      Obx(() => authController.isLoading.value
+                          ? CircularProgressIndicator()
+                          : Container(
+                              height: 48.h,
+                              width: 335.w,
+                              decoration: BoxDecoration(
+                                color: AppColor.primary,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (_validateInput()) {
+                                    authController.register(
+                                      nameController.text,
+                                      phoneController.text,
+                                      emailController.text,
+                                    );
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.transparent,
+                                  shadowColor: Colors.transparent,
+                                ),
+                                child: Text(
+                                  "Daftar",
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            )),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "Sudah punya akun? ",
+                          style: GoogleFonts.montserrat(fontSize: 15.sp),
+                          children: [
+                            TextSpan(
+                              text: "Masuk",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 15.sp,
+                                color: AppColor.secondary,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Get.toNamed(MyPage.login);
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )
@@ -215,5 +169,50 @@ class Register extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildInputField(
+      String label, TextEditingController controller, String hintText) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Text(
+            label,
+            style: GoogleFonts.roboto(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(
+          height: 8.h,
+        ),
+        Container(
+          width: 335.w,
+          height: 44.h,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(style: BorderStyle.solid, width: 1)),
+          child: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(
+                    left: 15.w, bottom: 13.h, top: 13.h),
+                hintText: hintText,
+                hintStyle: GoogleFonts.montserrat(
+                    fontSize: 15.sp, fontWeight: FontWeight.w300)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  bool _validateInput() {
+    if (nameController.text.isEmpty ||
+        phoneController.text.isEmpty) {
+      Get.snackbar('Error', 'Please fill all required fields');
+      return false;
+    }
+    return true;
   }
 }

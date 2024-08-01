@@ -5,7 +5,10 @@ import 'package:posweb/Config/theme.dart';
 import 'package:posweb/Presentation/Controller/AddOrderPopUp/popupController.dart';
 
 class AddOrderPopup extends StatelessWidget {
+  final Map<String, dynamic> item;
   final OrderController orderController = Get.find<OrderController>();
+
+  AddOrderPopup({required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +42,14 @@ class AddOrderPopup extends StatelessWidget {
                         'assets/product-image-3.png',
                         width: 100.w,
                         height: 100.h,
-                      ), // Ganti dengan gambar yang sesuai
+                      ),
                       SizedBox(width: 8.w),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Air Mineral Aqua 600 ML',
+                              item['item_name'],
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -55,11 +58,11 @@ class AddOrderPopup extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'Minuman menyegarkan',
+                              item['item_description'],
                               style: TextStyle(color: Colors.grey),
                             ),
                             Text(
-                              'Rp 20.000',
+                              'Rp ${item['item_price']}',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.green,
@@ -100,10 +103,15 @@ class AddOrderPopup extends StatelessWidget {
                 SizedBox(height: 10.h),
                 ElevatedButton(
                   onPressed: () {
-                    // Logic untuk menambahkan ke keranjang
+                    var newItem = {
+                      ...item,
+                      'quantity': orderController.quantity.value,
+                    };
+                    orderController.addToCart(newItem);
+                    orderController.resetQuantity();
                     Get.back();
                   },
-                  child: Text('Masukan Keranjang',style: TextStyle(color: Colors.white),),
+                  child: Text('Masukan Keranjang', style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColor.primary,
                     padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:posweb/Config/theme.dart';
 import 'package:posweb/Presentation/Controller/AddOrderPopUp/popupController.dart';
 
@@ -38,10 +39,13 @@ class AddOrderPopup extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.asset(
-                        'assets/product-image-3.png',
-                        width: 100.w,
-                        height: 100.h,
+                      Container(
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.r)),
+                        child: Image.asset(
+                          'assets/product-image-3.png',
+                          width: 100.w,
+                          height: 100.h,
+                        ),
                       ),
                       SizedBox(width: 8.w),
                       Expanded(
@@ -52,20 +56,21 @@ class AddOrderPopup extends StatelessWidget {
                               item['item_name'],
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: GoogleFonts.montserrat(
+                                  color: Colors.black, fontSize: 15.sp),
                             ),
                             Text(
                               item['item_description'],
-                              style: TextStyle(color: Colors.grey),
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w300),
+                              maxLines: 2,
                             ),
                             Text(
                               'Rp ${item['item_price']}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.green,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 18.sp,
+                                color: AppColor.primary,
                               ),
                             ),
                           ],
@@ -84,15 +89,15 @@ class AddOrderPopup extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                            icon: Icon(Icons.remove),
+                            icon: Icon(Icons.remove_circle_outline_outlined),
                             onPressed: orderController.decrement,
                           ),
                           Obx(() => Text(
-                            '${orderController.quantity.value}',
-                            style: TextStyle(fontSize: 16),
-                          )),
+                                '${orderController.quantity.value}',
+                                style: TextStyle(fontSize: 18.sp),
+                              )),
                           IconButton(
-                            icon: Icon(Icons.add),
+                            icon: Icon(Icons.add_circle_outline_outlined),
                             onPressed: orderController.increment,
                           ),
                         ],
@@ -104,17 +109,23 @@ class AddOrderPopup extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     var newItem = {
-                      ...item,
+                      'item_id': item['item_id'],
+                      'item_name': item['item_name'],
+                      'item_description': item['item_description'],
+                      'item_price': item['item_price'],
+                      'image_url': item['image_url'],
                       'quantity': orderController.quantity.value,
                     };
                     orderController.addToCart(newItem);
                     orderController.resetQuantity();
                     Get.back();
                   },
-                  child: Text('Masukan Keranjang', style: TextStyle(color: Colors.white)),
+                  child: Text('Masukan Keranjang',
+                      style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColor.primary,
-                    padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 80.w, vertical: 10.h),
                   ),
                 ),
               ],

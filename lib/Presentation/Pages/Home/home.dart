@@ -273,6 +273,7 @@ class Home extends StatelessWidget {
             );
           }),
           floatingActionButton: CustomFloatingActionButton(),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         ),
       ),
     );

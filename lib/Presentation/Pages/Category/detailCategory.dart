@@ -132,7 +132,7 @@ class DetailCategory extends StatelessWidget {
                                     width: 1.sw,
                                     child: CachedNetworkImage(
                                       fit: BoxFit.cover,
-                                      imageUrl: item['image_url'] ?? 'default_image_url',
+                                      imageUrl: item['image_url'] ?? 'assets/product-image-3.png',
                                       placeholder: (context, url) =>
                                           CircularProgressIndicator(),
                                       errorWidget: (context, url, error) =>
@@ -200,6 +200,7 @@ class DetailCategory extends StatelessWidget {
             );
           }),
           floatingActionButton: CustomFloatingActionButton(),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         ),
       ),
     );

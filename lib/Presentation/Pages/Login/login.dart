@@ -96,7 +96,8 @@ class Login extends StatelessWidget {
                       height: 44.h,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(style: BorderStyle.solid, width: 1)),
+                          border:
+                              Border.all(style: BorderStyle.solid, width: 1)),
                       child: TextField(
                         controller: phoneController,
                         decoration: InputDecoration(
@@ -105,6 +106,7 @@ class Login extends StatelessWidget {
                             contentPadding: EdgeInsets.symmetric(horizontal: 26.h),
                             hintText: "Masukkan No.Telepon",
                             hintStyle: GoogleFonts.montserrat(
+
                                 fontSize: 15.sp, fontWeight: FontWeight.w300)),
                       ),
                     ),

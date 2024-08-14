@@ -36,6 +36,8 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   http: ^1.2.2
   cached_network_image: ^3.0.0
+  get_storage: ^2.0.3
+  shared_preferences: ^2.0.11
 
 
 

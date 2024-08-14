@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -19,7 +18,12 @@ class MenuControl extends GetxController {
       final response = await http.get(Uri.parse('http://127.0.0.1:8000/api/menu-items')); // Replace with actual API URL
       if (response.statusCode == 200) {
         var items = jsonDecode(response.body);
-        print(items); // Log the API response
+        // Check if items have valid IDs
+        items.forEach((item) {
+          if (item['id'] == null) {
+            print('Item without ID found: $item');
+          }
+        });
         menuItems.assignAll(items);
       } else {
         print('Failed to fetch menu items: ${response.body}');
@@ -41,6 +45,12 @@ class MenuControl extends GetxController {
       print('Response status: ${response.statusCode}');
       if (response.statusCode == 200) {
         var items = jsonDecode(response.body);
+        // Check if items have valid IDs
+        items.forEach((item) {
+          if (item['id'] == null) {
+            print('Item without ID found: $item');
+          }
+        });
         print('Items fetched: ${items.length}');
         menuItems.value = items;
       } else {
@@ -56,13 +66,18 @@ class MenuControl extends GetxController {
     }
   }
 
-
   void fetchMenuItemsByLabel(String label) async {
     try {
       isLoading(true);
       var response = await http.get(Uri.parse('http://127.0.0.1:8000/api/menu-items/label/$label'));
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
+        // Check if items have valid IDs
+        data.forEach((item) {
+          if (item['id'] == null) {
+            print('Item without ID found: $item');
+          }
+        });
         menuItems.value = data;
       } else {
         Get.snackbar('Error', 'Failed to fetch menu items by label');

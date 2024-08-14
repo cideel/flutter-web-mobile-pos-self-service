@@ -9,6 +9,7 @@ import 'package:posweb/main.dart';
 
 class AuthController extends GetxController {
   var isLoading = false.obs;
+  var token = ''.obs;
 
   Future<void> register(String name, String phoneNumber, String email) async {
     isLoading.value = true;
@@ -42,6 +43,10 @@ class AuthController extends GetxController {
       isLoading.value = false;
     }
   }
+  void setToken(String newToken) {
+    token.value = newToken;
+    print("Token set: $newToken");
+  }
 
   Future<void> login(String phoneNumber) async {
     if (phoneNumber.isEmpty) {
@@ -70,11 +75,10 @@ class AuthController extends GetxController {
         final data = jsonDecode(response.body);
         Get.snackbar('Success', 'Login successful');
         // Optionally navigate to another screen or save the token
-        String token = data['token'];
-        // Save token in secure storage for future requests
-
+        token.value = data['token'];        
+        print('Token saved: ${token.value}');
         // Navigate to the navbar page
-        Get.offAllNamed(MyPage.dineConfirm); // Use your route name here
+        Get.offAllNamed(MyPage.home); // Use your route name here
       } else if (response.statusCode == 401) {
         final Map<String, dynamic> errors = jsonDecode(response.body);
         Get.snackbar('Error', 'Login failed: ${errors['message']}');

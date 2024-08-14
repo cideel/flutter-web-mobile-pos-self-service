@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:posweb/Config/theme.dart';
 import 'package:posweb/Presentation/Controller/AddOrderPopUp/popupController.dart';
-import 'package:posweb/Presentation/Controller/sendOrder.dart';
 
 class Order extends StatelessWidget {
   final OrderController orderController = Get.find<OrderController>();
+
   final int? customerId;
    Order({this.customerId});
 
@@ -193,7 +193,7 @@ class Order extends StatelessWidget {
                           Obx(() => Text(
                                 'Rp ${orderController.totalPrice.toStringAsFixed(0)}',
                                 style: GoogleFonts.montserrat(
-                                  fontSize: 22.sp,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.bold,
                                   color: AppColor.primary,
                                 ),

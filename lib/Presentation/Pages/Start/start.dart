@@ -6,10 +6,10 @@ import 'package:get/get.dart';
 import 'package:posweb/Config/router.dart';
 import 'package:posweb/Config/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:posweb/Model/User.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class StartPage extends StatelessWidget {
-  const StartPage({super.key});
 
   @override
   Widget build(BuildContext context) {

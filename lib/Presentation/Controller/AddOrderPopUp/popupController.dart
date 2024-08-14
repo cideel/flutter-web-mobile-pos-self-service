@@ -3,12 +3,16 @@ import 'dart:convert';
 import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:posweb/Presentation/Pages/Register/Controller/auth_controller.dart';
 
 
 class OrderController extends GetxController {
   var quantity = 1.obs;
   var cartItems = <Map<String, dynamic>>[].obs;
   var total_Price = 0.0.obs;
+  var orders = [].obs;
+
+  var isLoading = true.obs;
 
   void increment() => quantity.value++;
   void decrement() {
@@ -51,18 +55,18 @@ class OrderController extends GetxController {
     cartItems.refresh(); // Pastikan GetX mendeteksi perubahan
   }
 
-  Future<void> sendOrderToBackend({int? customerId}) async {
+  Future<void> sendOrderToBackend() async {
     final url = Uri.parse('http://127.0.0.1:8000/api/orders');
+      final AuthController authController = Get.find(); // Dapatkan instance AuthController
 
     final response = await http.post(
       url,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer YOUR_API_TOKEN',
+        'Authorization': 'Bearer ${authController.token.value}',
       },
       body: json.encode({
-        'customer_id': customerId,
         'total_price': totalPrice,
         'order_items': cartItems.map((item) => {
           'item_id': item['item_id'],
@@ -78,6 +82,45 @@ class OrderController extends GetxController {
       print('Failed to create order');
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
+    }
+  }
+ Future<void> fetchOrderHistory() async {
+    final url = Uri.parse('http://127.0.0.1:8000/api/orders/history');
+    final AuthController authController = Get.find<AuthController>();
+
+    print("Fetching order history...");
+    print("Token: ${authController.token.value}");
+
+    // Tidak perlu pengecekan null jika token.value tidak bisa null
+    if (authController.token.value.isEmpty) {
+      print("Token is empty");
+      return;
+    }
+
+    isLoading.value = true;
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${authController.token.value}',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        orders.value = data['orders'];
+        print('Order history fetched successfully: $data');
+      } else {
+        print('Failed to fetch order history');
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('An error occurred: $e');
+    } finally {
+      isLoading.value = false;
     }
   }
 }
